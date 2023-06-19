@@ -106,3 +106,4 @@ public class SongBot {
         songBot.start();
     }
 }
+npm install discord.js

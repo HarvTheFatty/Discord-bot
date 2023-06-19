@@ -1,0 +1,108 @@
+import net.dv8tion.jda.api.*;
+import net.dv8tion.jda.api.entities.*;
+
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class SongBot {
+    private final String token;
+    private final String channelId;
+    private final List<String> playlist;
+    private final Random random;
+
+    public SongBot(String token, String channelId, List<String> playlist) {
+        this.token = ;
+        this.channelId = channelId;
+        this.playlist = playlist;
+        this.random = new Random();
+    }
+
+    public void start() {
+        JDA jda = JDABuilder.createDefault(token).build();
+
+        jda.addEventListener(new ListenerAdapter() {
+            @Override
+            public void onReady(ReadyEvent event) {
+                scheduleDailySongPosting(jda);
+            }
+        });
+    }
+
+    private void scheduleDailySongPosting(JDA jda) {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                postRandomSong(jda);
+            }
+        }, getTimeUntilNextPost(), 24 * 60 * 60 * 1000);
+    }
+
+    private long getTimeUntilNextPost() {
+        LocalTime currentTime = LocalTime.now();
+        LocalTime targetTime = LocalTime.of(12, 0); // Change to your desired posting time
+
+        long currentMillis = currentTime.toNanoOfDay() / 1_000_000;
+        long targetMillis = targetTime.toNanoOfDay() / 1_000_000;
+
+        if (targetMillis <= currentMillis) {
+            targetMillis += 24 * 60 * 60 * 1000; // If the target time has already passed today, set it for tomorrow
+        }
+
+        return targetMillis - currentMillis;
+    }
+
+    private void postRandomSong(JDA jda) {
+        Guild guild = jda.getGuildById(channelId);
+        if (guild == null) {
+            System.out.println("Invalid channel ID or bot not in the server.");
+            return;
+        }
+
+        TextChannel channel = guild.getTextChannelById(channelId);
+        if (channel == null) {
+            System.out.println("Invalid channel ID.");
+            return;
+        }
+
+        String randomSong = getRandomSongFromPlaylist();
+        channel.sendMessage(randomSong).queue();
+    }
+
+    private String getRandomSongFromPlaylist() {
+        int index = random.nextInt(playlist.size());
+        return playlist.get(index);
+    }
+
+    public static void main(String[] args) {
+        String token = "MTEyMDM5NTU0MTk2OTM3MTI1OQ.GldgJZ.wFCHEsVsrfQQMPSHEA-hbR289GuajNkGoZmBTg";
+        String channelId = "1120407701990674492";
+        List<String> playlist = new ArrayList<>();
+        playlist.add(https://open.spotify.com/track/4txn9qnwK3ILQqv5oq2mO3);
+ playlist.add(https://open.spotify.com/track/4Vk4Yf7pDmB1dxLFSTjBUH);
+ playlist.add(https://open.spotify.com/track/1xNgtYdSqrja8fhgmIfzvx);
+ playlist.add(https://open.spotify.com/track/0O6SiaA3cBp24ZYnPX2GVQ);
+ playlist.add(https://open.spotify.com/track/011ZwIM48eD8ee2UBpG8nK);
+ playlist.add(https://open.spotify.com/track/6XyxCBp6x3jvtxXvMN5sAA);
+ playlist.add(https://open.spotify.com/track/7tkKTcUt7c4rrEs6E68oJj);
+ playlist.add(https://open.spotify.com/track/5tz69p7tJuGPeMGwNTxYuV);
+ playlist.add(https://open.spotify.com/track/62UTBl5LVd6HOCFvT57Axt);
+ playlist.add(https://open.spotify.com/track/1PpfeNl5uYRBhfFcig2Uz6);
+ playlist.add(https://open.spotify.com/track/1BqhfAEw4jigpJl0O23jnS);
+ playlist.add(https://open.spotify.com/track/3fKmIoHvrhBQMOITJYeyeb);
+ playlist.add(https://open.spotify.com/track/0FqBNLXlTNimxmVRdDMj6b);
+ playlist.add(ttps://open.spotify.com/track/14IZvVgj2z5QzPfgVIiP0j);
+ playlist.add(https://open.spotify.com/track/1LWYInY2Cl77jqgF4U1CJd);
+ playlist.add(https://open.spotify.com/track/3Fp7Qr0m39P7t8loxyZoog);
+ playlist.add(https://open.spotify.com/track/54FJWt8YIA1IHjmUxuDxwi); 
+ playlist.add(https://open.spotify.com/track/6RyP4ofBSZRQgs8G8y58Kc);
+      
+
+        SongBot songBot = new SongBot(token, channelId, playlist);
+        songBot.start();
+    }
+}

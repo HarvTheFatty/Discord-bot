@@ -79,7 +79,7 @@ public class SongBot {
     }
 
     public static void main(String[] args) {
-        String token = "";
+        String token = "MTEyMDM5NTU0MTk2OTM3MTI1OQ.G3y75e.Pqbhmg4SkHjUhjCRyMmEBYkAFOH9AwmNZBUOlw";
         String channelId = "1120407701990674492";
         List<String> playlist = new ArrayList<>();
         playlist.add(https://open.spotify.com/track/4txn9qnwK3ILQqv5oq2mO3);
